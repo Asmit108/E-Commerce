@@ -1,0 +1,21 @@
+.payment-success-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+  }
+  
+  .payment-success-container h1 {
+    color: green;
+    font-size: 3em;
+    margin: 0;
+  }
+  
+  .payment-success-container p {
+    color: #333;
+    font-size: 1.2em;
+    margin-top: 20px;
+  }
+  

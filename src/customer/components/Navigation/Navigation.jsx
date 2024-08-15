@@ -12,10 +12,17 @@
   }
   ```
 */
-import { Fragment, useCallback, useState } from 'react'
+import { Fragment, useCallback, useEffect, useState } from 'react'
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
 import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import AuthModal from '../../Auth/AuthModal'
+import { store } from '../../../State/store'
+import { useDispatch, useSelector } from 'react-redux'
+import { getUser, logout } from '../../../State/Auth/Action'
+import { Avatar } from '@mui/material'
+import { deepOrange } from '@mui/material/colors'
+import { getOrderHistory } from '../../../State/Order/Action'
 
 const navigation = {
   categories: [
@@ -145,24 +152,95 @@ function classNames(...classes) {
 }
 
 export default function Navigation() {
-  const [open, setOpen] = useState(false)
-  const navigate = useNavigate()
+  const [open, setOpen] = useState(false);
+  const [openAuthModal, setOpenAuthModel] = useState(false);
+  const [anchorE1, setAnchorE1] = useState(null);
+  const openUserMenu = Boolean(anchorE1);
+  const jwt = localStorage.getItem("jwt");
+  const navigate = useNavigate();
+  const { auth } = useSelector(store => store)
+  const dispatch = useDispatch()
+  const location = useLocation()
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const {cart}=useSelector(store=>store)
 
-  {/* const handleOpen=()=>{
+  const handleUserClick = (event) => {
+    setAnchorE1(event.currentTarget);
+  }
+
+  const handleCloseUserMenu = (event) => {
+    setAnchorE1(null);
+  }
+
+  const handleProfileClick = () => {
+    navigate(`/profile`);
+    toggleDropdown();
+  }
+
+  const handleOrderClick = () => {
+    dispatch(getOrderHistory());
+    navigate(`/account/order`);
+    toggleDropdown();
+  }
+
+  const handleLogout = () => {
+    console.log(auth.user);
+    dispatch(logout());
+    console.log(auth.user);
+    navigate('/');
+    toggleDropdown();
+  };
+
+  const handleOpenSignin = () => {
     setOpenAuthModel(true);
-  } 
-   const handleClose=()=>{
+    navigate(`/login`)
+  }
+  const handleOpenCreate = () => {
+    setOpenAuthModel(true);
+    navigate(`/register`)
+  }
+  const handleClose = () => {
     setOpenAuthModel(false);
-  } */}
+    navigate(`/`);
+  }
   const handleCategoryClick = (category, section, item) => {
-    navigate(`/${category.id}/${section.id}/${item.name}`);
+    console.log(category,section);
+    navigate(`/${section.id}/${category.id}/${item.name}`);
     {/*close();*/ }
   }
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+
+  useEffect(() => {
+    console.log(auth.jwt);
+    if (jwt) {
+      console.log(jwt);
+      dispatch(getUser())
+      handleClose();
+    }
+  }, [jwt, auth.jwt])
+
+  useEffect(() => {
+    console.log("user",auth.user);
+    console.log("auth.jwt",auth.jwt);
+    console.log("jwt",jwt);
+    if (location.pathname === 'login' || location.pathname === 'register') {
+      navigate(-1)
+    }
+    if(auth.user!=null){
+      handleClose();
+    }
+  }, [auth.user])
+
+
   return (
     <div className="bg-white sticky top-0 z-50">
       {/* Mobile menu */}
       <Transition.Root show={open} as={Fragment}>
-        <Dialog className="relative z-40 lg:hidden" onClose={setOpen}>
+        <Dialog className="relative z-40 lg:hidden" onClose={handleCloseUserMenu}>
           <Transition.Child
             as={Fragment}
             enter="transition-opacity ease-linear duration-300"
@@ -400,7 +478,7 @@ export default function Navigation() {
                                           >
                                             {section.items.map((item) => (
                                               <li key={item.name} className="flex">
-                                                <button className="hover:text-gray-800" onClick={() => handleCategoryClick(category, section, item)}>
+                                                <button className="hover:text-gray-800" onClick={()=>handleCategoryClick(section,category,item)}>
                                                   {item.name}
                                                 </button>
                                               </li>
@@ -433,15 +511,46 @@ export default function Navigation() {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
-                    Sign in
-                  </a>
-                  <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                  <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
-                    Create account
-                  </a>
+                  {auth.user ? (
+                    <div className="relative">
+                      <Avatar onClick={toggleDropdown} style={{ cursor: 'pointer' }}>
+                        {auth.user.firstName.charAt(0).toUpperCase()}
+                      </Avatar>
+                      {dropdownOpen && (
+                        <div className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-10">
+                          <button
+                            onClick={handleProfileClick}
+                            className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                          >
+                            My Profile
+                          </button>
+                          <button
+                            onClick={handleOrderClick}
+                            className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                          >
+                            My Orders
+                          </button>
+                          <button
+                            onClick={handleLogout}
+                            className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                          >
+                            Logout
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <>
+                      <button onClick={handleOpenSignin} className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                        Sign in
+                      </button>
+                      <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
+                      <button onClick={handleOpenCreate} className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                        Create account
+                      </button>
+                    </>
+                  )}
                 </div>
-
                 <div className="hidden lg:ml-8 lg:flex">
                   <a href="#" className="flex items-center text-gray-700 hover:text-gray-800">
                     <img
@@ -464,12 +573,12 @@ export default function Navigation() {
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
-                  <button onClick={()=>navigate(`/cart`)} className="group -m-2 flex items-center p-2">
+                  <button onClick={() => navigate(`/cart`)} className="group -m-2 flex items-center p-2">
                     <ShoppingBagIcon
                       className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
                     />
-                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{cart?.cart?.cartItems?.length}</span>
                     <span className="sr-only">items in cart, view bag</span>
                   </button>
                 </div>
@@ -478,6 +587,9 @@ export default function Navigation() {
           </div>
         </nav>
       </header>
-    </div>
+
+      <AuthModal handleClose={handleClose} open={openAuthModal} />
+
+    </div >
   )
 }

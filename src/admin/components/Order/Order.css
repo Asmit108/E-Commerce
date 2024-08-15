@@ -1,0 +1,38 @@
+.order-container {
+    padding: 2px;
+    padding-top:10px;
+}
+
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.order-table th,
+.order-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.order-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+.handle-button {
+    color: gray;
+    border: 1px solid black;
+    /* or any other color you prefer */
+    padding: 5px 10px;
+    /* optional, for better spacing */
+    border-radius: 4px;
+    /* optional, for rounded corners */
+    background-color: white;
+    /* optional, for background color */
+}
+
+.handle-button:hover {
+    background-color: green;
+    color: red;
+    /* optional, to change the text color on hover */
+}

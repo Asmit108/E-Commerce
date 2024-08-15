@@ -1,0 +1,75 @@
+.product-container {
+    padding: 20px;
+  }
+  
+  .product-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .product-table th, .product-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .product-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+  }
+  
+  .product-table img {
+    width: 50px;
+    height: auto;
+  }
+  
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 4px;
+    width: 300px;
+  }
+  
+  .modal-content form label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .modal-content form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .modal-content form button {
+    padding: 10px 20px;
+    margin-right: 10px;
+  }
+
+  .handle-button {
+    color: gray;
+    border: 1px solid black; /* or any other color you prefer */
+    padding: 5px 10px; /* optional, for better spacing */
+    border-radius: 4px; /* optional, for rounded corners */
+    background-color: white; /* optional, for background color */
+  }
+
+  .handle-button:hover {
+    background-color: green;
+    color: red; /* optional, to change the text color on hover */
+  }
+  
+  

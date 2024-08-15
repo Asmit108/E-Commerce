@@ -1,35 +1,40 @@
-import React from 'react'
-import AddressCard from '../AddressCard/AddressCard'
-import { Box, Button, Grid, TextField } from '@mui/material'
+import React, { useEffect } from 'react';
+import { Box, Button, Grid, TextField } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { createOrder } from '../../../State/Order/Action';
+import { useDispatch, useSelector } from 'react-redux';
 
-const DeliveryAddressForm = () => {
-
-    const handleSubmit = (e) => {
+const DeliveryAddressForm = ({ address, setAddress }) => {
+    const navigate = useNavigate();
+    const { order } = useSelector(store => store);
+    const dispatch = useDispatch();
+    
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const data = new FormData(e.currentTarget)
-        const address = {
+        const data = new FormData(e.currentTarget);
+        const updatedAddress = {
             firstName: data.get("firstName"),
             lastName: data.get("lastName"),
             streetAddress: data.get("address"),
-            State: data.get("state"),
-            City: data.get("city"),
-            zipcode: data.get("zip"),
+            state: data.get("state"),
+            city: data.get("city"),
+            zipCode: data.get("zip"),
             mobile: data.get("phoneNumber")
+        };
+        setAddress(updatedAddress);
+        await dispatch(createOrder(updatedAddress));
+    };
+
+    useEffect(() => {
+        if (order.order) {
+            console.log(order.order);
+            navigate(`/checkout?step=3&orderId=${order.order._id}`);
         }
-        console.log("address", address)
-    }
-
-
+    }, [order.order, navigate]);
 
     return (
         <div>
             <Grid container spacing={4}>
-                <Grid xs={12} lg={5} item className='border rounded-e-md shadow-md h-[30.5rem] overflow-y-scroll'>
-                    <div className='p-5 py-7 border-b cursor-pointer'>
-                        <AddressCard />
-                        <Button sx={{ mt: 2, bgcolor: 'blue', ml:2.5}} size='large' variant='contained'> Deliver Here </Button>
-                    </div>
-                </Grid>
                 <Grid item xs={7} lg={7}>
                     <Box className='border rounded-s-md shadow-md p-5'>
                         <form onSubmit={handleSubmit}>
@@ -81,32 +86,31 @@ const DeliveryAddressForm = () => {
                                         required
                                         id="state"
                                         name="state"
-                                        label="Zip/Postal Code"
-                                        fullWidth
-                                        autoComplete="given-name"
-                                    />
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <TextField
-                                        required
-                                        id="state"
-                                        name="state"
-                                        label="Phone Number"
-                                        fullWidth
-                                        autoComplete="given-name"
-                                    />
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <TextField
-                                        required
-                                        id="state"
-                                        name="state"
                                         label="State"
                                         fullWidth
                                         autoComplete="given-name"
                                     />
                                 </Grid>
-
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        required
+                                        id="zip"
+                                        name="zip"
+                                        label="Zip Code"
+                                        fullWidth
+                                        autoComplete="given-name"
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        required
+                                        id="phoneNumber"
+                                        name="phoneNumber"
+                                        label="Mobile"
+                                        fullWidth
+                                        autoComplete="given-name"
+                                    />
+                                </Grid>
                             </Grid>
                             <Button sx={{ mt: 2, bgcolor: "blue" }}
                                 type="submit" variant="contained" size="large">
@@ -117,7 +121,7 @@ const DeliveryAddressForm = () => {
                 </Grid>
             </Grid>
         </div>
-    )
+    );
 }
 
-export default DeliveryAddressForm
+export default DeliveryAddressForm;

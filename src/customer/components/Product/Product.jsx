@@ -12,7 +12,7 @@
   }
   ```
 */
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
@@ -20,7 +20,11 @@ import { mens_shirt } from '../../../Data/mens_shirt'
 import ProductCard from './ProductCard'
 import { filters } from './FilterData'
 import FilterListIcon from '@mui/icons-material/FilterList';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { findProducts } from '../../../State/Product/Action'
+import { SportsHockey } from '@mui/icons-material'
+import { store } from '../../../State/store'
 
 const sortOptions = [
   { name: 'Price: Low to High', href: '#', current: false },
@@ -35,21 +39,19 @@ export default function Product() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
+  const param=useParams()
+  const dispatch=useDispatch()
+  const {product}=useSelector(store=>store);
 
-  {/* const handleOpen=()=>{
-    setOpenAuthModel(true);
-  } 
-   const handleClose=()=>{
-    setOpenAuthModel(false);
-  } */}
-  const handleProductClick = (item) => {
-
-    const currentPath = location.pathname;
-
-    // Navigate to the new path
-    navigate(`${currentPath}/${item.brand}`);
-    {/*close();*/ }
-  }
+  const decodedQueryString = decodeURIComponent(location.search);
+  const searchParams = new URLSearchParams(decodedQueryString);
+  const colorValue = searchParams.get("color");
+  const sizeValue = searchParams.get("size");
+  const priceValue = searchParams.get("price");
+  const discount = searchParams.get("discount");
+  const sortValue = searchParams.get("sort");
+  const pageNumber = searchParams.get("page") || 1;
+  const stock = searchParams.get("stock");
   const handleFilter = (value, sectionId) => {
     const searchParams = new URLSearchParams(location.search)
     let filterValue = searchParams.getAll(sectionId)
@@ -72,6 +74,22 @@ export default function Product() {
     const query = searchParams.toString();
     navigate({ search: `?${query}` })
   }
+  useEffect(()=>{
+    const [minPrice,maxPrice]=priceValue===null?[0,0]:priceValue.split("-").map(Number);
+    const data={
+      category:param.lavelThree,
+      colors:colorValue||[],
+      sizes:sizeValue||[],
+      minPrice,
+      maxPrice,
+      discount:discount,
+      sort:sortValue||"price_low",
+      pageNumber:pageNumber-1,
+      pageSize:10,
+      stock:stock
+    }
+    dispatch(findProducts(data));
+  },[param.lavelThree,colorValue,sizeValue,priceValue,discount,sortValue,pageNumber,stock])
 
   return (
     <div className="bg-white">
@@ -293,7 +311,7 @@ export default function Product() {
               {/* Product grid */}
               <div className="lg:col-span-4 w-full gap-2">
                 <div className='flex flex-wrap justify-center bg-white py-5' >
-                  {mens_shirt.map((item) => <ProductCard product={item}/>)}
+                  {product.products?.map((item) => <ProductCard product={item} />)}
                 </div>
               </div>
             </div>
