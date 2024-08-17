@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import OrderItem from './OrderItem'
 import OrderTracker from '../Order/OrderTracker'
 import { updatePaymentInformation } from '../../../State/Payment/Action'
 
 const PaymentSuccess = () => {
     const { order } = useSelector(store => store)
+    const dispatch=useDispatch()
     useEffect(()=>{
       dispatch(updatePaymentInformation)
     },[dispatch,order.order])
