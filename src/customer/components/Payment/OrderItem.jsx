@@ -14,8 +14,8 @@ const OrderItem = ({item}) => {
                         <p className='opacity-70 mt-2'>Seller: {item?.product?.brand}</p>
                     </div>
                     <div className='flex space-x-5 items-center text-gray-900 pt-4 pl-[1.18rem]'>
-                        <p className='font-semibold'>{item?.discountedPrice}</p>
-                        <p className='opacity-50 line-through'>{item?.price}</p>
+                        <p className='font-semibold'>₹{item?.discountedPrice}</p>
+                        <p className='opacity-50 line-through'>₹{item?.price}</p>
                         <p className='text-green-600 font-semibold'>{item?.product?.discountPersent}% OFF</p>
                     </div>
                 </div>

@@ -11,6 +11,10 @@ import Order from '../customer/components/Order/Order'
 import OrderDetails from '../customer/components/Order/OrderDetails'
 import Profile from '../customer/components/Profile/Profile'
 import PaymentSuccess from '../customer/components/Payment/PaymentSuccess'
+import Privacy from '../customer/Policy/Privacy'
+import Terms from '../customer/Policy/Terms'
+import Refund from '../customer/Policy/Refund'
+import Shipping from '../customer/Policy/Shipping'
 
 const CustomerRouters = () => {
     return (
@@ -20,6 +24,10 @@ const CustomerRouters = () => {
             </div>
             <Routes>
                 <Route path='/' element={<HomePage />}></Route>
+                <Route path='/privacy' element={<Privacy />}></Route>
+                <Route path='/shipping' element={<Shipping />}></Route>
+                <Route path='/terms' element={<Terms />}></Route>
+                <Route path='/refund' element={<Refund />}></Route>
                 <Route path='/register' element={<HomePage />}></Route>
                 <Route path='/login' element={<HomePage />}></Route>
                 <Route path='/profile' element={<Profile />}></Route>

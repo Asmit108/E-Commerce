@@ -18,7 +18,7 @@ const OrderDetailsCard = ({item}) => {
                     </div>
                 </Grid>
                 <Grid item xs={2}>
-                    ${item.price}
+                ₹{item.price}
                 </Grid>
                 <Grid>
                     <Box sx={{color:deepPurple[500]}} className='pt-12'>

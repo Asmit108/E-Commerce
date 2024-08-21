@@ -24,7 +24,7 @@ const OrderCard = ({ order }) => {
                     </div>
                 </Grid>
                 <Grid item xs={2}>
-                    ${order.totalDiscountedPrice}
+                ₹{order.totalDiscountedPrice}
                 </Grid>
                 <Grid item xs={4}>
                     {order.orderStatus === 'DELIVERED' ? (

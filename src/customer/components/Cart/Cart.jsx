@@ -29,11 +29,11 @@ const Cart = () => {
               <div className='font-semibold'>
                 <div className='flex justify-between pt-3 text-black'>
                   <span>Price</span>
-                  <span>${cart?.cart?.totalPrice}</span>
+                  <span>₹{cart?.cart?.totalPrice}</span>
                 </div>
                 <div className='flex justify-between pt-3'>
                   <span>Discount</span>
-                  <span className='text-green-600'>-${cart?.cart?.discount}</span>
+                  <span className='text-green-600'>-₹{cart?.cart?.discount}</span>
                 </div>
                 <div className='flex justify-between pt-3'>
                   <span>Delivery Charge</span>
@@ -41,7 +41,7 @@ const Cart = () => {
                 </div>
                 <div className='flex justify-between pt-3 font-bold'>
                   <span>Subtotal</span>
-                  <span className='text-green-600'>${cart?.cart?.totalDiscountedPrice}</span>
+                  <span className='text-green-600'>₹{cart?.cart?.totalDiscountedPrice}</span>
                 </div>
               </div>
               <button
