@@ -4,10 +4,10 @@ import { FIND_PRODUCTS_FAILURE, FIND_PRODUCTS_SUCCESS, FIND_PRODUCT_BY_ID_REQUES
 export const findProducts=(reqData)=>async(dispatch)=>{
     
     dispatch({type:FIND_PRODUCTS_REQUEST})
-    const {colors,sizes,minPrice,maxPrice,minDiscount,category,stock,sort,pageNumber,pageSize}=reqData;
+    const {color,sizes,minPrice,maxPrice,minDiscount,category,stock,sort,pageNumber,pageSize}=reqData;
     try {
         console.log(reqData);
-        const {data}=await api.get(`/api/products?color=${colors}&size=${sizes}&minPrice=${minPrice}&maxPrice=${maxPrice}
+        const {data}=await api.get(`/api/products?color=${color}&size=${sizes}&minPrice=${minPrice}&maxPrice=${maxPrice}
          &minDiscount=${minDiscount}&category=${category}&stock=${stock}&sort=${sort}&pageNumber=${pageNumber}
          &pageSize=${pageSize}`)
          console.log(data);

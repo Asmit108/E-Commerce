@@ -78,18 +78,18 @@ export default function Product() {
     const [minPrice,maxPrice]=priceValue===null?[0,0]:priceValue.split("-").map(Number);
     const data={
       category:param.lavelThree,
-      colors:colorValue||[],
+      color:colorValue||[],
       sizes:sizeValue||[],
       minPrice,
       maxPrice,
-      discount:discount,
+      minDiscount:discount,
       sort:sortValue||"price_low",
       pageNumber:pageNumber-1,
       pageSize:10,
       stock:stock
     }
     dispatch(findProducts(data));
-  },[param.lavelThree,colorValue,sizeValue,priceValue,discount,sortValue,pageNumber,stock])
+  },[param.lavelThree,colorValue,sizeValue,priceValue,discount,sortValue,pageNumber,stock,dispatch])
 
   return (
     <div className="bg-white">
