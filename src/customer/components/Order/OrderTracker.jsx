@@ -29,7 +29,8 @@ const OrderTracker = () => {
   const dispatch=useDispatch()
   const [activeStep,setactiveStep]=useState(0)
   useEffect(()=>{
-    setactiveStep(getStatusStep(order.order.orderStatus))
+    console.log(order)
+    setactiveStep(getStatusStep(order.order?.orderStatus))
   },[dispatch,order.order])
   
   return (

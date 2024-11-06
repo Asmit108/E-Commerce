@@ -11,15 +11,15 @@ const Product = () => {
   const [newPrice, setNewPrice] = useState('');
   const [newDiscountedPrice, setNewDiscountedPrice] = useState('');
   const [newQuantity, setNewQuantity] = useState('');
-
+  const role=localStorage.getItem("role")
   useEffect(() => {
     const data={
       category:'',
-      colors:[],
+      color:[],
       sizes:[],
       minPrice:0,
       maxPrice:0,
-      discount:0,
+      minDiscount:0,
       sort:'',
       pageNumber:1,
       pageSize:500,
@@ -58,6 +58,8 @@ const Product = () => {
   };
 
   return (
+    <>
+    {(role=='ADMIN')?(
     <div className='product-container'>
       {product.products && product.products.length > 0 && (
         <table className='product-table'>
@@ -126,6 +128,8 @@ const Product = () => {
         </div>
       )}
     </div>
+    ):(<div>Access Denied...</div>)}
+    </>
   );
 };
 

@@ -23,10 +23,11 @@ const OrderSummary = ({address}) => {
     // }, [cart.cartItems, auth.jwt]);
 
     useEffect(() => {
-        dispatch(getOrderById());
-    }, [orderId]);
+        dispatch(getOrderById(orderId));
+    }, [dispatch,orderId]);
     
     const handleCheckout=()=>{
+        console.log(orderId)
         dispatch(createPayment(orderId))
     }
       

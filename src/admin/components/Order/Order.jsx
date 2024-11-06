@@ -3,10 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Select, MenuItem } from '@mui/material';
 import { cancelOrder, confirmOrder, deleteOrder, deliverOrder, getAllOrders, shipOrder } from '../../../State/Order/Action';
 import './Order.css'
+
 const Order = () => {
   const dispatch = useDispatch();
   const { order } = useSelector(store => store); // Update with your actual state path
-
+  const role=localStorage.getItem("role")
   useEffect(() => {
     dispatch(getAllOrders()); // Fetch orders when component mounts
   }, [dispatch, order.order]);
@@ -31,6 +32,8 @@ const Order = () => {
   }
 
   return (
+    <>
+    {(role=='ADMIN')?(
     <div className='order-container'>
     <table className='order-table'>
       <thead>
@@ -83,6 +86,8 @@ const Order = () => {
       </tbody>
     </table>
     </div>
+    ):(<div>Access Denied...</div>)}
+    </>
   )
 }
 {/* {order.orders?.map((order) => (

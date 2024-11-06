@@ -4,6 +4,7 @@ import { createProduct } from '../../../State/Product/Action';
 import './ProductForm.css'; // Assuming you have some CSS styles
 
 const ProductForm = () => {
+  const role=localStorage.getItem("role")
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     title: '',
@@ -43,6 +44,8 @@ const ProductForm = () => {
   };
 
   return (
+    <>
+    {(role=='ADMIN')?(
     <div className='product-form-container'>
       <form onSubmit={handleSubmit}>
         <label>Title:</label>
@@ -87,6 +90,8 @@ const ProductForm = () => {
         <button type='submit'>Create Product</button>
       </form>
     </div>
+    ):(<div>Access Denied...</div>)}
+    </>
   );
 };
 

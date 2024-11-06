@@ -4,6 +4,8 @@ import { Chart as ChartJS } from 'chart.js/auto'
 import './Dashboard.css';
 
 const Dashboard = () => {
+  const role = localStorage.getItem("role");
+
   const lineChartData = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
     datasets: [
@@ -70,42 +72,51 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard-container">
-      <div className="header">
-        <h1>Welcome to the Dashboard</h1>
-      </div>
-      <div className="content">
-        <div className="card">
-          <h2>Users</h2>
-          <p>Number of Users: 150</p>
+    <>
+      {(role == "ADMIN") ?(
+        <div className="dashboard-container">
+          <div className="header">
+            <h1>Welcome to the Dashboard</h1>
+          </div>
+          <div className="content">
+            <div className="card">
+              <h2>Users</h2>
+              <p>Number of Users: 150</p>
+            </div>
+            <div className="card">
+              <h2>Products</h2>
+              <p>Number of Products: 75</p>
+            </div>
+            <div className="card">
+              <h2>Orders</h2>
+              <p>Number of Orders: 320</p>
+            </div>
+          </div>
+          <div className="charts">
+            <div className="chart-card">
+              <h3>Sales Over Time</h3>
+              <Line data={lineChartData} />
+            </div>
+            <div className="chart-card">
+              <h3>Product Votes</h3>
+              <Bar data={barChartData} />
+            </div>
+            <div className="chart-card">
+              <h3>Sales Distribution</h3>
+              <Pie data={pieChartData} />
+            </div>
+          </div>
+          <div className="footer">
+            <p>Dashboard Footer</p>
+          </div>
         </div>
-        <div className="card">
-          <h2>Products</h2>
-          <p>Number of Products: 75</p>
+      ):(<div className="access-denied-container">
+        <div className="access-denied-message">
+          <h2>Access Denied</h2>
+          <p>You do not have permission to access this page.</p>
         </div>
-        <div className="card">
-          <h2>Orders</h2>
-          <p>Number of Orders: 320</p>
-        </div>
-      </div>
-      <div className="charts">
-        <div className="chart-card">
-          <h3>Sales Over Time</h3>
-          <Line data={lineChartData} />
-        </div>
-        <div className="chart-card">
-          <h3>Product Votes</h3>
-          <Bar data={barChartData} />
-        </div>
-        <div className="chart-card">
-          <h3>Sales Distribution</h3>
-          <Pie data={pieChartData} />
-        </div>
-      </div>
-      <div className="footer">
-        <p>Dashboard Footer</p>
-      </div>
-    </div>
+      </div>)}
+    </>
   );
 }
 

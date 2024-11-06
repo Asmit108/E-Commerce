@@ -6,7 +6,7 @@ import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { mens_shirt } from '../../../Data/mens_shirt'
 
 const HomeSectionCarousel = ({data,sectionName}) => {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);  
   const items = data.slice(0, 40).map((item) => <HomeSectionCard product={item} />);
   const responsive = {
     0: { items: 1 },

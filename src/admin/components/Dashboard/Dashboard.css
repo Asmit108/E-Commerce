@@ -76,4 +76,32 @@ body {
     text-align: center;
     padding: 10px;
   }
+
+  .access-denied-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full height of the viewport */
+    background-color: rgba(255, 0, 0, 0.1); /* Light red background */
+    color: #900; /* Dark red color */
+    text-align: center;
+    padding: 20px;
+}
+
+.access-denied-message {
+    background: white; /* White background for the message box */
+    border-radius: 8px; /* Rounded corners */
+    padding: 40px; /* Padding around the message */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.access-denied-message h2 {
+    font-size: 2em; /* Large heading */
+    margin-bottom: 10px;
+}
+
+.access-denied-message p {
+    font-size: 1.2em; /* Slightly larger paragraph text */
+}
+
   

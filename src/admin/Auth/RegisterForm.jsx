@@ -2,7 +2,7 @@ import { Button, Grid, TextField } from '@mui/material'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { getAllUsers, getUser, register } from '../../State/Auth/Action'
+import { getUser, register } from '../../State/Auth/Action'
 import { store } from '../../State/store'
 
 const RegisterForm = () => {
@@ -14,7 +14,6 @@ const RegisterForm = () => {
   useEffect(()=>{
     if(jwt){
        dispatch(getUser())
-       dispatch(getAllUsers())
     }
   },[jwt,auth.jwt])
 

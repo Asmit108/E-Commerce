@@ -29,7 +29,7 @@ function Sidebar() {
   const dispatch = useDispatch()
   const location = useLocation()
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
+  const role=localStorage.getItem("role")
   const handleLogout = () => {
     console.log(auth.user);
     dispatch(logout());
@@ -77,7 +77,7 @@ function Sidebar() {
     }
   }, [auth.user])
   return (
-    <>
+  
       <IconContext.Provider value={{ color: '#fff' }}>
         <div className='navbar'>
           <Link to='#' className='menu-bars'>
@@ -119,6 +119,7 @@ function Sidebar() {
             <AuthModal handleClose={handleClose} open={openAuthModal} />
           </div>
         </div>
+        {(role == "ADMIN")?(
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
           <ul className='nav-menu-items' onClick={showSidebar}>
             <li className='navbar-toggle'>
@@ -137,9 +138,8 @@ function Sidebar() {
               );
             })}
           </ul>
-        </nav>
+        </nav>):(<></>)}
       </IconContext.Provider>
-    </>
   );
 }
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Grid, TextField } from '@mui/material'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { login, register } from '../../State/Auth/Action';
+import { login } from '../../State/Auth/Action';
 
 const LoginForm = () => {
   const navigate=useNavigate();

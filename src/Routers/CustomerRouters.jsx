@@ -37,10 +37,10 @@ const CustomerRouters = () => {
                 <Route path='/checkout' element={<Checkout />}></Route>
                 <Route path='/account/order' element={<Order />}></Route>
                 <Route path='/account/order/:orderId' element={<OrderDetails />}></Route>
-                <Route path='/payment/:orderId' element={<PaymentSuccess />}></Route>
+                <Route path='/payments/success' element={<PaymentSuccess />}></Route>
             </Routes>
             <div>
-            
+
             </div>
             <div>
                 <Footer />
